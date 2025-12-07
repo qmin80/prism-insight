@@ -1,3 +1,42 @@
+/**
+ * Dashboard Main Page
+ * 
+ * [역할]
+ * Next.js 대시보드의 메인 페이지입니다.
+ * 대시보드 데이터를 로드하고 여러 탭을 통해 다양한 정보를 표시합니다.
+ * 
+ * [주요 기능]
+ * 1. 대시보드 데이터 로드
+ *    - dashboard_data.json (한국어) 또는 dashboard_data_en.json (영어) 로드
+ *    - 5분마다 자동 갱신
+ * 2. 탭 네비게이션
+ *    - dashboard: 메인 대시보드 (포트폴리오, 성과 차트)
+ *    - ai-decisions: AI 의사결정 이력
+ *    - trading: 거래 이력
+ *    - watchlist: 관심종목 이력
+ *    - jeoningu-lab: 전인구 트레이딩 실험실
+ * 3. 종목 상세 모달
+ *    - 종목 클릭 시 상세 정보 표시
+ * 
+ * [사용 컴포넌트]
+ * - DashboardHeader: 헤더 및 탭 네비게이션
+ * - OperatingCostsCard: 운영 비용 표시
+ * - MetricsCards: 핵심 지표 카드
+ * - HoldingsTable: 보유 종목 테이블 (실전투자/시뮬레이터)
+ * - PerformanceChart: 성과 차트
+ * - AIDecisionsPage: AI 의사결정 페이지
+ * - TradingHistoryPage: 거래 이력 페이지
+ * - WatchlistPage: 관심종목 페이지
+ * - JeoninguLabPage: 전인구 실험실 페이지
+ * - StockDetailModal: 종목 상세 모달
+ * 
+ * [데이터 소스]
+ * - /dashboard_data.json (한국어)
+ * - /dashboard_data_en.json (영어)
+ * 
+ * [자동 갱신]
+ * - 5분마다 데이터 자동 갱신 (useEffect + setInterval)
+ */
 "use client"
 
 import { useState, useEffect } from "react"

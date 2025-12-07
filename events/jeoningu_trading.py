@@ -1,14 +1,43 @@
 #!/usr/bin/env python3
 """
-Jeon Ingu Contrarian Trading System - '전인구경제연구소' Analysis & Trading Simulator
+Jeon Ingu Contrarian Trading System
 
-Simplified strategy:
-- Jeon says UP → Buy KODEX Inverse 2X (252670)
-- Jeon says NEUTRAL → Sell all positions
-- Jeon says DOWN → Buy KODEX Leverage (122630)
+[역할]
+유튜브 채널 '전인구경제연구소'의 시장 분석을 기반으로 역추세 매매를 시뮬레이션하는 시스템입니다.
+전인구의 시장 전망과 반대로 매매하는 전략을 구현합니다.
 
-Always hold max 1 position at a time. Switch positions when sentiment changes.
-Use full balance for each trade (all-in strategy).
+[전략]
+- 전인구가 "상승" 전망 → KODEX Inverse 2X (252670) 매수 (하락 대비)
+- 전인구가 "중립" 전망 → 모든 포지션 매도
+- 전인구가 "하락" 전망 → KODEX Leverage (122630) 매수 (상승 대비)
+- 최대 1개 포지션만 보유
+- 전액 투자 전략 (all-in)
+
+[주요 기능]
+1. 유튜브 RSS 피드 모니터링
+   - 전인구경제연구소 채널의 새 영상 감지
+2. AI 기반 감정 분석
+   - 영상 제목/내용 분석
+   - 전인구의 시장 전망 추출 (UP/DOWN/NEUTRAL)
+3. 역추세 매매 시뮬레이션
+   - 전망에 반대되는 ETF 매수/매도
+   - 수익률 추적
+4. 데이터베이스 저장
+   - 영상 정보, 분석 결과, 매매 이력 저장
+
+[호출 관계]
+- 호출하는 모듈:
+  * feedparser: RSS 피드 파싱
+  * yt_dlp: 유튜브 영상 다운로드
+  * OpenAI: AI 감정 분석
+  * events/jeoningu_trading_db.py: 데이터베이스 저장
+  * events/jeoningu_price_fetcher.py: 현재가 조회
+
+[사용 예시]
+    from events.jeoningu_trading import JeoninguTrading
+    
+    trading = JeoninguTrading(use_telegram=True)
+    await trading.run()
 """
 
 import os

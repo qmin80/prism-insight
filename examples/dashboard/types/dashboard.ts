@@ -1,3 +1,26 @@
+/**
+ * Dashboard Type Definitions
+ * 
+ * [역할]
+ * Next.js 대시보드에서 사용하는 모든 TypeScript 타입 정의입니다.
+ * 
+ * [주요 타입]
+ * 1. PortfolioSummary: 포트폴리오 요약 정보
+ * 2. TradingSummary: 거래 요약 정보
+ * 3. AIDecisionsSummary: AI 의사결정 요약 정보
+ * 4. RealTradingSummary: 실전투자 요약 정보
+ * 5. Summary: 전체 요약 정보
+ * 6. Holding: 보유 종목 정보
+ * 7. Trade: 거래 이력 정보
+ * 8. WatchlistItem: 관심종목 정보
+ * 9. HoldingDecision: AI 의사결정 정보
+ * 10. MarketCondition: 시장 상황 정보
+ * 11. DashboardData: 전체 대시보드 데이터
+ * 12. JeoninguLabData: 전인구 실험실 데이터
+ * 
+ * [데이터 소스]
+ * - generate_dashboard_json.py에서 생성된 JSON 파일과 일치해야 함
+ */
 export interface PortfolioSummary {
   total_stocks: number
   total_profit: number

@@ -1,13 +1,68 @@
 #!/usr/bin/env python3
 """
-주식 포트폴리오 대시보드용 JSON 데이터 생성 스크립트
-Cron으로 주기적 실행 (예: */5 * * * * - 5분마다)
+Dashboard JSON Data Generator
 
-Usage:
+[역할]
+SQLite 데이터베이스에서 데이터를 추출하여 Next.js 대시보드에서 사용할 JSON 파일을 생성하는 스크립트입니다.
+Crontab으로 주기적으로 실행되어 대시보드 데이터를 자동 갱신합니다.
+
+[주요 기능]
+1. SQLite 데이터베이스 연결
+   - stock_tracking_db.sqlite에서 데이터 조회
+2. 데이터 추출
+   - 보유 종목 (stock_holdings 테이블)
+   - 거래 이력 (trading_history 테이블)
+   - 관심종목 이력 (watchlist_history 테이블)
+   - AI 의사결정 이력 (holding_decisions 테이블)
+   - 전인구 트레이딩 데이터 (jeoningu_trades 테이블)
+3. 한국투자증권 API 연동
+   - 실전투자 포트폴리오 조회
+   - 계좌 잔액 조회
+4. 시장 지수 데이터 조회
+   - KOSPI/KOSDAQ 지수 (pykrx 사용)
+5. 영어 번역 생성 (선택적)
+   - GPT-5-nano를 사용한 자동 번역
+6. JSON 파일 저장
+   - dashboard_data.json (한국어)
+   - dashboard_data_en.json (영어)
+
+[호출 관계]
+- 호출하는 모듈:
+  * sqlite3: SQLite 데이터베이스 연결
+  * trading/domestic_stock_trading.py: KIS API 연동
+  * pykrx.stock: 시장 지수 데이터 조회
+  * translation_utils.py: 영어 번역 (선택적)
+
+- 호출되는 모듈:
+  * Crontab: 주기적 실행
+  * Next.js 대시보드: JSON 파일 읽기
+
+[주요 클래스]
+- DashboardDataGenerator: 대시보드 데이터 생성 클래스
+
+[주요 메서드]
+- connect_db(): 데이터베이스 연결
+- get_kis_trading_data(): KIS API 데이터 조회
+- get_sqlite_data(): SQLite 데이터 조회
+- get_market_index_data(): 시장 지수 데이터 조회
+- generate_json(): JSON 파일 생성
+- translate_to_english(): 영어 번역 생성
+
+[사용 예시]
+    # 수동 실행
     python generate_dashboard_json.py
+    
+    # Crontab 설정 (5분마다)
+    */5 * * * * cd /project-root/examples && python generate_dashboard_json.py
 
-Output:
-    ./dashboard/public/dashboard_data.json - 대시보드에서 사용할 모든 데이터
+[출력 파일]
+- examples/dashboard/public/dashboard_data.json (한국어)
+- examples/dashboard/public/dashboard_data_en.json (영어)
+
+[주의사항]
+- SQLite 데이터베이스 파일 경로 확인 필요
+- KIS API 설정 파일 필요 (trading/config/kis_devlp.yaml)
+- 번역 기능 사용 시 OpenAI API 키 필요
 """
 
 import sqlite3

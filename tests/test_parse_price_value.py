@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
 """
-_parse_price_value 함수 테스트 스크립트
+Price Value Parsing Test
 
-이 테스트는 stock_tracking_agent.py의 _parse_price_value 메서드를 다양한 입력 조건에서 검증합니다.
+[역할]
+stock_tracking_agent.py의 _parse_price_value 메서드를 테스트하는 스크립트입니다.
+다양한 형식의 가격 값(숫자, 문자열, 범위 등)을 파싱하는 로직을 검증합니다.
+
+[주요 테스트 항목]
+1. 숫자 형식 파싱 (정수, 실수)
+2. 문자열 형식 파싱 (쉼표 포함, 범위 표현)
+3. 범위 표현 파싱 (예: "2000~2050", "1,700-1,800")
+4. 에러 케이스 처리
+
+[실행 방법]
+    python tests/test_parse_price_value.py
 """
 
 import sys

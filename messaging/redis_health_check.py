@@ -1,9 +1,36 @@
 """
 Redis Health Check Script
 
-Upstash Redis 무료 티어의 비활성화를 방지하기 위한 주기적 Health Check 스크립트.
-이 스크립트는 주기적으로 실행되어 Redis에 간단한 데이터를 저장하고 조회함으로써
-데이터베이스를 활성 상태로 유지합니다.
+[역할]
+Upstash Redis 무료 티어의 비활성화를 방지하기 위한 주기적 Health Check 스크립트입니다.
+주기적으로 실행되어 Redis에 간단한 데이터를 저장하고 조회함으로써 데이터베이스를 활성 상태로 유지합니다.
+
+[주요 기능]
+1. PING 테스트
+   - Redis 연결 상태 확인
+2. 타임스탬프 저장
+   - 마지막 체크 시간 저장 (24시간 TTL)
+3. 카운터 증가
+   - 체크 횟수 추적 (30일 TTL)
+4. 로그 기록
+   - 최근 100개 체크 이력 저장 (7일 TTL)
+5. 데이터 검증
+   - 저장된 데이터 읽기 확인
+
+[실행 방법]
+    # 직접 실행
+    python messaging/redis_health_check.py
+    
+    # 크론탭 등록 (매일 오전 9시)
+    0 9 * * * cd /path/to/prism-insight && python messaging/redis_health_check.py
+
+[권장 실행 주기]
+- 매일 1회: 충분히 안전
+- 매주 2-3회: 최소 권장
+
+[설정]
+- UPSTASH_REDIS_REST_URL: Redis REST API URL
+- UPSTASH_REDIS_REST_TOKEN: Redis REST API Token
 
 Usage:
     # 직접 실행

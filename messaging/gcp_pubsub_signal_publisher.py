@@ -1,19 +1,48 @@
 """
 GCP Pub/Sub Signal Publisher
 
-Module for publishing PRISM-INSIGHT buy/sell signals to Google Cloud Pub/Sub.
-Subscribers can receive real-time trading signals by subscribing to this topic.
+[역할]
+PRISM-INSIGHT의 매수/매도 신호를 Google Cloud Pub/Sub에 발행하는 모듈입니다.
+GCP 인프라를 사용하는 경우 실시간으로 거래 신호를 구독자에게 전달할 수 있습니다.
 
-Usage:
+[주요 기능]
+1. 매수 신호 발행
+   - 종목 코드, 회사명, 가격, 시나리오 정보 포함
+2. 매도 신호 발행
+   - 종목 코드, 매도 가격, 수익률 정보 포함
+3. Google Cloud Pub/Sub 사용
+   - 비동기 컨텍스트 매니저 지원
+   - 서비스 계정 인증 지원
+
+[호출 관계]
+- 호출하는 모듈:
+  * google.cloud.pubsub_v1: GCP Pub/Sub 클라이언트
+  * stock_tracking_agent.py: 매수/매도 신호 발행
+
+[주요 클래스]
+- SignalPublisher: GCP Pub/Sub 신호 발행 클래스
+
+[주요 메서드]
+- publish_buy_signal(): 매수 신호 발행
+- publish_sell_signal(): 매도 신호 발행
+- connect(): Pub/Sub 연결
+- disconnect(): Pub/Sub 연결 해제
+
+[사용 예시]
     from messaging.gcp_pubsub_signal_publisher import SignalPublisher
-
+    
     async with SignalPublisher() as publisher:
         await publisher.publish_buy_signal(
             ticker="005930",
-            company_name="Samsung Electronics",
+            company_name="삼성전자",
             price=82000,
-            scenario=scenario_dict
+            scenario={"target_price": 90000, "stop_loss": 78000}
         )
+
+[설정]
+- GCP_PROJECT_ID: GCP 프로젝트 ID
+- GCP_PUBSUB_TOPIC_ID: Pub/Sub 토픽 ID (기본값: "prism-trading-signals")
+- GCP_CREDENTIALS_PATH: 서비스 계정 JSON 키 파일 경로
 """
 import os
 import json

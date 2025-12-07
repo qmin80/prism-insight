@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
 """
-주식 트래킹 에이전트 특정 기능 테스트 스크립트
+Stock Tracking Agent Specific Functions Test
+
+[역할]
+주식 트래킹 에이전트의 특정 기능을 개별적으로 테스트하는 스크립트입니다.
+종목 정보 추출, 주가 조회, 시나리오 추출 등 개별 메서드를 테스트합니다.
+
+[주요 테스트 항목]
+1. 종목 정보 추출 테스트
+2. 현재 주가 조회 테스트
+3. 매매 시나리오 추출 테스트
+4. 보유 종목 수 조회 테스트
+5. 보유종목 업데이트 테스트
+
+[실행 방법]
+    python tests/test_specific_functions.py
 """
 import asyncio
 import json

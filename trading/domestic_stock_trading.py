@@ -1,8 +1,56 @@
 """
-Domestic stock trading module
-- Fixed amount purchase per stock
-- Market price buy/sell
-- Full liquidation sell
+Domestic Stock Trading Module
+
+[역할]
+한국투자증권(KIS) API를 사용한 국내 주식 매매 모듈입니다.
+실전투자와 모의투자를 지원하며, 비동기 처리를 통해 동시 매매를 지원합니다.
+
+[주요 기능]
+1. 매수 기능
+   - 고정 금액 매수 (종목당 동일 금액)
+   - 시장가 매수
+   - 매수 가능 수량 자동 계산
+2. 매도 기능
+   - 시장가 매도
+   - 전량 매도 (100% 청산)
+3. 계좌 조회
+   - 잔고 조회
+   - 보유 종목 조회
+   - 예수금 조회
+4. 비동기 처리
+   - 동시 매매 지원 (세마포어로 제한)
+   - 종목별 락 (동일 종목 중복 매매 방지)
+   - 전역 락 (계좌 접근 제어)
+
+[호출 관계]
+- 호출하는 모듈:
+  * trading/kis_auth.py: KIS API 인증
+  * 한국투자증권 Open API: REST API 호출
+  * stock_tracking_agent.py: 자동 매매 실행
+
+[주요 클래스]
+- DomesticStockTrading: 국내 주식 매매 클래스
+
+[주요 메서드]
+- get_current_price(): 현재가 조회
+- calculate_buy_quantity(): 매수 가능 수량 계산
+- buy_stock(): 주식 매수
+- sell_stock(): 주식 매도
+- get_balance(): 계좌 잔고 조회
+- get_holdings(): 보유 종목 조회
+
+[사용 예시]
+    from trading.domestic_stock_trading import DomesticStockTrading
+    
+    trading = DomesticStockTrading(mode="demo", buy_amount=1000000)
+    result = await trading.buy_stock("005930", 1000000)  # 삼성전자 100만원 매수
+
+[설정]
+- trading/config/kis_devlp.yaml: KIS API 설정 파일
+  * 앱키, 앱시크리트
+  * 계좌번호
+  * 기본 매수 금액
+  * 자동 매매 활성화 여부
 """
 
 import asyncio

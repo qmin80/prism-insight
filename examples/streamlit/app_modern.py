@@ -1,3 +1,53 @@
+"""
+Streamlit Web Application - AI Stock Analysis Request Interface
+
+[역할]
+사용자가 웹 인터페이스를 통해 종목 코드를 입력하고 AI 분석 리포트를 요청할 수 있는 Streamlit 앱입니다.
+분석은 백그라운드에서 비동기로 실행되며, 완료 후 이메일로 자동 전송됩니다.
+
+[주요 기능]
+1. 종목 코드 입력 폼
+   - 종목 코드 및 회사명 입력
+   - 분석 기준일 선택
+   - 이메일 주소 입력
+2. 백그라운드 분석 작업 큐
+   - Queue를 사용한 작업 관리
+   - 스레드 풀을 통한 비동기 처리
+3. 분석 상태 실시간 확인
+   - 대기 중/진행 중/완료/실패 상태 표시
+   - 진행률 표시
+4. 이메일 자동 전송
+   - 분석 완료 시 자동으로 이메일 발송
+   - HTML 본문 + 마크다운/HTML 첨부파일
+
+[호출 관계]
+- 호출하는 모듈:
+  * cores/analysis.py: analyze_stock() 함수 호출
+  * email_sender.py: send_email() 함수 호출
+  * queue, threading: 백그라운드 작업 관리
+
+[주요 클래스]
+- AnalysisRequest: 분석 요청 정보를 담는 데이터 클래스
+- ModernStockAnalysisApp: Streamlit 앱 메인 클래스
+
+[주요 메서드]
+- setup_page(): 페이지 설정 및 CSS 적용
+- initialize_session_state(): 세션 상태 초기화
+- start_background_worker(): 백그라운드 워커 스레드 시작
+- process_analysis_queue(): 분석 작업 처리
+- render_analysis_form(): 분석 요청 폼 렌더링
+- render_status_display(): 상태 표시 렌더링
+
+[사용 예시]
+    streamlit run app_modern.py
+    # 또는
+    streamlit run app_modern.py --server.port 8501
+
+[주의사항]
+- config.py 파일이 필요함 (config.py.example 참고)
+- SMTP 서버 설정 필요
+- cores/analysis.py 모듈이 접근 가능해야 함
+"""
 import streamlit as st
 from datetime import datetime
 import re

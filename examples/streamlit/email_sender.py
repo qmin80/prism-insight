@@ -1,3 +1,50 @@
+"""
+Email Sender Module for Streamlit App
+
+[역할]
+분석 리포트를 이메일로 전송하는 모듈입니다.
+마크다운 리포트를 HTML로 변환하여 이메일 본문으로 사용하고, 원본 마크다운과 HTML 파일을 첨부합니다.
+
+[주요 기능]
+1. 마크다운 → HTML 변환
+   - GitHub 스타일 CSS 적용
+   - 코드 블록, 테이블 등 마크다운 확장 지원
+2. 이메일 전송
+   - HTML 본문
+   - 마크다운 파일 첨부
+   - HTML 파일 첨부
+3. SMTP 서버 연동
+   - TLS 암호화 지원
+   - Gmail, Outlook 등 주요 이메일 서비스 지원
+
+[호출 관계]
+- 호출하는 모듈:
+  * smtplib: SMTP 서버 통신
+  * markdown: 마크다운 파싱
+  * config: SMTP 설정 (SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, SENDER_PASSWORD)
+
+- 호출되는 모듈:
+  * app_modern.py: 분석 완료 후 이메일 전송
+
+[주요 함수]
+- send_email(): 이메일 전송 메인 함수
+- convert_md_to_html(): 마크다운을 HTML로 변환
+
+[사용 예시]
+    from email_sender import send_email
+    
+    success = send_email(
+        to_email="user@example.com",
+        report_content="# 분석 리포트\n\n내용..."
+    )
+
+[설정 요구사항]
+- config.py 파일에 다음 변수 정의 필요:
+  * SMTP_SERVER: SMTP 서버 주소 (예: "smtp.gmail.com")
+  * SMTP_PORT: SMTP 포트 (예: 587)
+  * SENDER_EMAIL: 발신자 이메일 주소
+  * SENDER_PASSWORD: 발신자 이메일 비밀번호 (앱 비밀번호 권장)
+"""
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart

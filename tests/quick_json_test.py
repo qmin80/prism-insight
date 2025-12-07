@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
-"""간단한 JSON 파싱 테스트"""
+"""
+Quick JSON Parsing Test
+
+[역할]
+JSON 파싱 오류를 빠르게 테스트하는 간단한 스크립트입니다.
+실제 에러 로그에서 발생한 JSON 문법 오류를 수정하는 로직을 검증합니다.
+
+[주요 테스트 항목]
+1. JSON 문법 오류 수정 (마지막 쉼표, 누락된 쉼표 등)
+2. 수정된 JSON 파싱 검증
+
+[실행 방법]
+    python tests/quick_json_test.py
+"""
 
 import json
 import re

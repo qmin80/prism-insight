@@ -1,6 +1,33 @@
 """
-Created on 20250112
-@author: LaivData SJPark with cursor
+KIS API - 주식 현재가 조회 샘플 코드
+
+[역할]
+한국투자증권 Open API를 사용하여 주식 현재가를 조회하는 샘플 코드입니다.
+실시간 시세가 필요한 경우 WebSocket API를 사용하는 것을 권장합니다.
+
+[주요 기능]
+1. 주식 현재가 조회
+   - 종목 코드로 현재가 정보 조회
+   - 시가, 고가, 저가, 종가, 거래량 등 포함
+2. 시장 분류 지원
+   - KRX (J), NXT (NX), 통합 (UN)
+
+[호출 관계]
+- 호출하는 모듈:
+  * trading/kis_auth.py: KIS API 인증 및 호출
+
+[주요 함수]
+- inquire_price(): 주식 현재가 조회
+
+[사용 예시]
+    from trading.samples.inquire_price import inquire_price
+    
+    df = inquire_price(
+        env_dv="demo",
+        fid_cond_mrkt_div_code="J",
+        fid_input_iscd="005930"
+    )
+    print(df)
 """
 
 

@@ -1,3 +1,38 @@
+/**
+ * Dashboard Header Component
+ * 
+ * [역할]
+ * 대시보드 상단 헤더 컴포넌트입니다.
+ * 탭 네비게이션, 테마 전환, 언어 전환, 마지막 업데이트 시간 표시 기능을 제공합니다.
+ * 
+ * [주요 기능]
+ * 1. 탭 네비게이션
+ *    - dashboard: 메인 대시보드
+ *    - ai-decisions: AI 의사결정
+ *    - trading: 거래 이력
+ *    - watchlist: 관심종목
+ *    - jeoningu-lab: 전인구 실험실
+ * 2. 테마 전환
+ *    - 다크/라이트 모드 전환
+ *    - next-themes 사용
+ * 3. 언어 전환
+ *    - 한국어/영어 전환
+ *    - LanguageProvider 사용
+ * 4. 마지막 업데이트 시간 표시
+ *    - 데이터 생성 시간 표시
+ * 5. 외부 링크
+ *    - GitHub 링크
+ *    - 텔레그램 채널 링크
+ * 
+ * [사용 컴포넌트]
+ * - Button: UI 버튼
+ * - Tooltip: 툴팁
+ * 
+ * [Props]
+ * - activeTab: 현재 활성 탭
+ * - onTabChange: 탭 변경 핸들러
+ * - lastUpdated: 마지막 업데이트 시간 (ISO 형식)
+ */
 "use client"
 
 import { Moon, Sun, TrendingUp, Github, Send, Languages } from "lucide-react"

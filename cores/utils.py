@@ -1,3 +1,33 @@
+"""
+Core Utilities Module
+
+[역할]
+핵심 분석 엔진에서 사용하는 유틸리티 함수들을 제공합니다.
+
+[주요 기능]
+1. 마크다운 텍스트 정리 (clean_markdown)
+   - 백틱 블록 제거
+   - 개행문자 리터럴 변환
+2. WiseReport URL 생성 (get_wise_report_url)
+   - 기업 정보 조회를 위한 URL 생성
+   - 다양한 리포트 타입 지원
+
+[호출 관계]
+- 호출하는 모듈:
+  * re: 정규표현식 처리
+
+- 호출되는 모듈:
+  * cores/analysis.py: 마크다운 정리
+  * cores/agents/__init__.py: WiseReport URL 생성
+
+[주요 함수]
+- clean_markdown(): 마크다운 텍스트 정리
+- get_wise_report_url(): WiseReport URL 생성
+
+[WiseReport 지원 리포트 타입]
+- 기업현황, 기업개요, 재무분석, 투자지표
+- 컨센서스, 경쟁사분석, 지분현황, 업종분석, 최근리포트
+"""
 import re
 import subprocess
 

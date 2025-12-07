@@ -1,9 +1,23 @@
 """
-빠른 테스트 스크립트 - 핵심 기능만 간단히 테스트
+Quick Trading Test Script
 
-사용법:
-python quick_test.py [buy|sell|portfolio] [--mode demo|real]
-python quick_test.py [buy|sell|portfolio] [demo|real]  # 간단한 형태
+[역할]
+트레이딩 기능을 빠르게 테스트하는 스크립트입니다.
+핵심 기능(매수, 매도, 포트폴리오 조회)만 간단히 테스트합니다.
+
+[사용법]
+    python quick_test.py [buy|sell|portfolio] [--mode demo|real]
+    python quick_test.py [buy|sell|portfolio] [demo|real]  # 간단한 형태
+
+[예시]
+    python quick_test.py portfolio              # 모의투자로 포트폴리오 조회
+    python quick_test.py portfolio --mode demo  # 모의투자로 포트폴리오 조회
+    python quick_test.py buy --mode real        # 실전투자로 매수 (주의!)
+    python quick_test.py sell real              # 실전투자로 매도 (주의!)
+
+[주의사항]
+- 실전투자 모드 사용 시 실제 매매가 발생합니다
+- 테스트는 모의투자 모드로 실행하는 것을 권장합니다
 """
 
 import asyncio

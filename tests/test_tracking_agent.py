@@ -1,6 +1,22 @@
 #!/usr/bin/env python3
 """
-주식 트래킹 에이전트 테스트 스크립트
+Stock Tracking Agent Test Script
+
+[역할]
+주식 트래킹 에이전트의 기능을 테스트하는 스크립트입니다.
+보고서 분석, 매수/매도 결정, 요약 생성 등을 테스트합니다.
+
+[주요 테스트 항목]
+1. 개별 보고서 분석 테스트
+2. 전체 프로세스 테스트 (매수/매도 결정)
+3. 보고서 요약 생성 테스트
+
+[실행 방법]
+    python tests/test_tracking_agent.py
+
+[테스트 데이터]
+- reports/ 폴더의 마크다운 보고서 파일 사용
+- 예: reports/013700_까뮤이앤씨_20250311_morning_gpt4o.md
 """
 import asyncio
 import logging

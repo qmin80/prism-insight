@@ -1,10 +1,45 @@
 """
-Jeon Ingu Contrarian Trading - Integrated with stock_tracking_db.sqlite
+Jeon Ingu Trading Database Module
 
-Enhanced table design:
-- Each video creates one row
-- Trade information recorded when action taken
-- Proper linking between BUY and SELL via related_buy_id
+[역할]
+전인구 트레이딩 시스템의 데이터베이스 관리 모듈입니다.
+메인 PRISM 시스템과 동일한 SQLite 데이터베이스를 사용합니다.
+
+[주요 기능]
+1. 데이터베이스 초기화
+   - jeoningu_trades 테이블 생성
+   - 인덱스 생성
+2. 영상 정보 저장
+   - 유튜브 영상 ID, 제목, 날짜, URL
+   - AI 분석 결과 (감정, 근거, 역추세 액션)
+3. 매매 이력 저장
+   - 매수/매도 정보
+   - 수익/손실 추적
+   - 포트폴리오 잔액 관리
+4. 데이터 조회
+   - 영상 중복 확인
+   - 매매 이력 조회
+   - 통계 정보 조회
+
+[데이터베이스 스키마]
+- jeoningu_trades 테이블:
+  * 영상 정보 (video_id, video_title, video_date, video_url)
+  * AI 분석 결과 (jeon_sentiment, jeon_reasoning, contrarian_action)
+  * 매매 정보 (trade_type, stock_code, quantity, price, amount)
+  * 수익 추적 (related_buy_id, profit_loss, profit_loss_pct)
+  * 포트폴리오 (balance_before, balance_after, cumulative_return_pct)
+
+[호출 관계]
+- 호출하는 모듈:
+  * aiosqlite: 비동기 SQLite 접근
+  * events/jeoningu_trading.py: 데이터 저장/조회
+
+[주요 메서드]
+- initialize(): 데이터베이스 초기화
+- video_id_exists(): 영상 중복 확인
+- save_video_analysis(): 영상 분석 결과 저장
+- save_trade(): 매매 정보 저장
+- get_trading_history(): 매매 이력 조회
 """
 
 import aiosqlite

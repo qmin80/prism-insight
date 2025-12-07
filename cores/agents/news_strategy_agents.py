@@ -1,3 +1,42 @@
+"""
+News and Strategy Analysis Agents Module
+
+[역할]
+뉴스 분석 및 투자 전략 수립을 위한 AI 에이전트를 생성하는 모듈입니다.
+최신 뉴스, 섹터 동향, 산업 리더 분석을 통해 투자 전략을 제시합니다.
+
+[주요 기능]
+1. 뉴스 분석 에이전트 생성
+   - 네이버 파이낸스 뉴스 수집
+   - 섹터 리더 종목 파악 (Perplexity 사용)
+   - 섹터 동향 분석
+   - 당일 주가 변동 요인 분석
+2. 투자 전략 에이전트 생성
+   - 종합 분석 보고서 기반 투자 전략 수립
+   - 매수/매도/관망 결정
+   - 목표가, 손절가, 투자 기간 제시
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp_agent: AI 에이전트 프레임워크
+  * firecrawl: 웹 페이지 스크래핑
+  * perplexity: 섹터 리더 및 동향 검색
+  * cores/agents/__init__.py: get_agent_directory()에서 사용
+
+[주요 함수]
+- create_news_analysis_agent(): 뉴스 분석 에이전트 생성
+- create_investment_strategy_agent(): 투자 전략 에이전트 생성
+
+[사용 예시]
+    from cores.agents.news_strategy_agents import create_news_analysis_agent
+    
+    agent = create_news_analysis_agent(
+        company_name="삼성전자",
+        company_code="005930",
+        reference_date="20250101",
+        language="ko"
+    )
+"""
 from mcp_agent.agents.agent import Agent
 
 

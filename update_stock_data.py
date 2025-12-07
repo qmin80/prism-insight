@@ -1,8 +1,50 @@
 #!/usr/bin/env python3
 """
-종목 정보 업데이트 스크립트
+Stock Data Update Script
 
-매일 주기적으로 실행하여 주식 종목 정보(코드, 이름)를 최신화
+[역할]
+KOSPI/KOSDAQ 종목 정보를 업데이트하는 스크립트입니다.
+종목 코드와 종목명 매핑 정보를 JSON 파일로 저장합니다.
+
+[주요 기능]
+1. 종목 정보 수집
+   - KOSPI 종목 목록 및 이름
+   - KOSDAQ 종목 목록 및 이름
+2. 데이터 변환
+   - 코드 → 이름 매핑
+   - 이름 → 코드 매핑
+3. JSON 파일 저장
+   - stock_map.json 파일 생성
+   - 업데이트 시간 기록
+
+[실행 방법]
+    # 기본 실행
+    python update_stock_data.py
+    
+    # 출력 파일 지정
+    python update_stock_data.py --output custom_stock_map.json
+
+[크론탭 등록 예시]
+    # 매일 오전 9시 실행
+    0 9 * * * cd /path/to/prism-insight && python update_stock_data.py
+
+[출력 파일 형식]
+    {
+        "code_to_name": {
+            "005930": "삼성전자",
+            "000660": "SK하이닉스",
+            ...
+        },
+        "name_to_code": {
+            "삼성전자": "005930",
+            "SK하이닉스": "000660",
+            ...
+        },
+        "updated_at": "2025-01-01T09:00:00"
+    }
+
+[의존성]
+- pykrx: 한국 주식 시장 데이터 조회
 """
 import os
 import json

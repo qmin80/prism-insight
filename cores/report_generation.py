@@ -1,3 +1,44 @@
+"""
+Report Generation Module
+
+[역할]
+AI 에이전트를 사용하여 주식 분석 보고서의 각 섹션을 생성하는 모듈입니다.
+재시도 로직과 다국어 지원을 포함합니다.
+
+[주요 기능]
+1. 섹션별 보고서 생성
+   - 각 AI 에이전트를 사용하여 섹션별 분석 보고서 생성
+   - 재시도 로직 포함 (최대 2회 시도)
+2. 다국어 지원
+   - 한국어, 영어, 일본어, 중국어, 스페인어, 프랑스어, 독일어 지원
+   - 언어별 프롬프트 자동 생성
+3. 에러 처리
+   - 지수 백오프 재시도 (10초~30초)
+   - 예외 발생 시 자동 재시도
+
+[호출 관계]
+- 호출하는 모듈:
+  * tenacity: 재시도 로직
+  * mcp_agent: AI 에이전트 프레임워크
+  * cores/analysis.py: analyze_stock() 함수에서 사용
+
+[주요 함수]
+- generate_report(): 섹션별 보고서 생성 (재시도 로직 포함)
+- generate_full_report(): 전체 보고서 생성
+
+[사용 예시]
+    from cores.report_generation import generate_report
+    
+    report = await generate_report(
+        agent=price_agent,
+        section="주가 및 거래량 분석",
+        company_name="삼성전자",
+        company_code="005930",
+        reference_date="20250101",
+        logger=logger,
+        language="ko"
+    )
+"""
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from mcp_agent.agents.agent import Agent
 from mcp_agent.workflows.llm.augmented_llm import RequestParams

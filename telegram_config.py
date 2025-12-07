@@ -1,9 +1,44 @@
 #!/usr/bin/env python3
 """
-Telegram configuration and utility module
+Telegram Configuration Management Module
 
-Encapsulates telegram usage settings following SOLID principles
-and minimizes redundant conditional processing.
+[역할]
+텔레그램 설정을 중앙화하여 관리하는 클래스입니다.
+SOLID 원칙을 따르며 중복된 조건 처리를 최소화합니다.
+
+[주요 기능]
+- 환경 변수(.env) 자동 로드
+- 텔레그램 사용 여부 관리
+- 다국어 채널 ID 관리 (en, ja, zh 등)
+- 설정 검증 및 상태 로깅
+
+[호출 관계]
+- 호출되는 모듈:
+  * stock_analysis_orchestrator.py: 텔레그램 설정 로드
+  * telegram_bot_agent.py: 채널 ID 및 봇 토큰 사용
+  * stock_tracking_enhanced_agent.py: 텔레그램 리포트 전송
+
+[주요 클래스]
+- TelegramConfig: 텔레그램 설정 관리 클래스
+
+[주요 메서드]
+- validate_or_raise(): 설정 검증 (필수 값 확인)
+- log_status(): 현재 설정 상태 로깅
+- get_broadcast_channel_id(): 다국어 채널 ID 조회
+
+[환경 변수]
+- TELEGRAM_BOT_TOKEN: 텔레그램 봇 토큰
+- TELEGRAM_CHANNEL_ID: 메인 채널 ID (한국어)
+- TELEGRAM_CHANNEL_ID_EN: 영어 채널 ID
+- TELEGRAM_CHANNEL_ID_JA: 일본어 채널 ID
+- TELEGRAM_CHANNEL_ID_ZH: 중국어 채널 ID
+
+[사용 예시]
+    from telegram_config import TelegramConfig
+    
+    config = TelegramConfig(use_telegram=True)
+    config.validate_or_raise()
+    config.log_status()
 """
 import logging
 import os

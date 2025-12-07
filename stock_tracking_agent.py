@@ -2,14 +2,65 @@
 """
 Stock Tracking and Trading Agent
 
-This module performs buy/sell decisions using AI-based stock analysis reports
-and manages trading records.
+[역할]
+AI 기반 주식 분석 보고서를 사용하여 매수/매도 결정을 수행하고 거래 기록을 관리하는 에이전트입니다.
+포트폴리오 관리, 매매 시나리오 생성, 거래 이력 추적 등의 기능을 제공합니다.
 
-Main Features:
-1. Generate trading scenarios based on analysis reports
-2. Manage stock purchases/sales (maximum 10 slots)
-3. Track trading history and returns
-4. Share results through Telegram channel
+[주요 기능]
+1. 매매 시나리오 생성
+   - 분석 보고서를 읽어 매매 시나리오 생성
+   - 목표가, 손절가, 투자 기간 등 결정
+   - 매수 점수 계산 및 매수/관망 결정
+2. 포트폴리오 관리
+   - 최대 10개 슬롯 관리
+   - 섹터 분산 관리 (동일 섹터 최대 3개)
+   - 투자 기간 분산 관리
+3. 매수/매도 실행
+   - 매수 조건 확인 및 실행
+   - 매도 조건 확인 및 실행
+   - 한국투자증권 API 연동
+4. 거래 이력 추적
+   - 매수/매도 이력 저장
+   - 수익률 계산
+   - 보유 기간 추적
+5. 텔레그램 알림
+   - 매수/매도 결정 알림
+   - 포트폴리오 상태 알림
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp_agent: MCP Agent 프레임워크
+  * cores/agents/trading_agents.py: 매매 시나리오 생성 에이전트
+  * trading/domestic_stock_trading.py: 실제 매매 실행
+  * sqlite MCP 서버: 데이터베이스 접근
+  * python-telegram-bot: 텔레그램 알림
+
+[주요 클래스]
+- StockTrackingAgent: 주식 트래킹 및 매매 에이전트
+
+[주요 메서드]
+- initialize(): 데이터베이스 초기화
+- analyze_report(): 보고서 분석 및 매매 시나리오 생성
+- process_reports(): 여러 보고서 일괄 처리
+- update_holdings(): 보유 종목 업데이트
+- check_sell_conditions(): 매도 조건 확인
+- send_telegram_notification(): 텔레그램 알림 전송
+
+[데이터베이스 테이블]
+- stock_holdings: 보유 종목
+- trading_history: 거래 이력
+- watchlist_history: 관심종목 이력
+
+[사용 예시]
+    from stock_tracking_agent import StockTrackingAgent
+    
+    agent = StockTrackingAgent()
+    await agent.initialize()
+    await agent.process_reports(["reports/005930_삼성전자_20250101.md"])
+
+[설정]
+- stock_tracking_db.sqlite: SQLite 데이터베이스 파일
+- TELEGRAM_BOT_TOKEN: 텔레그램 봇 토큰 (선택적)
 """
 import asyncio
 import json

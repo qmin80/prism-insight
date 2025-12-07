@@ -1,6 +1,37 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Ubuntu Font Installer and Configuration Script
 
+[역할]
+Ubuntu/Linux 환경에서 한글 폰트(나눔고딕)를 자동으로 설치하고 matplotlib에 설정하는 스크립트입니다.
+
+[주요 기능]
+1. 시스템 폰트 확인
+   - 나눔고딕 폰트 설치 여부 확인
+   - fc-list를 통한 폰트 검색
+2. 자동 폰트 설치
+   - fonts-nanum, fonts-nanum-coding 패키지 자동 설치
+   - 시스템 폰트 캐시 갱신
+3. Matplotlib 폰트 설정
+   - 폰트 캐시 강제 새로고침
+   - 나눔고딕 폰트 강제 적용
+4. 검증
+   - 테스트 차트 생성
+   - 실제 사용 폰트 확인
+
+[실행 방법]
+    python cores/ubuntu_font_installer.py
+
+[주의사항]
+- sudo 권한 필요 (폰트 설치 시)
+- Ubuntu/Debian 계열 Linux에서만 동작
+- macOS에서는 실행 불필요 (시스템 폰트 사용)
+
+[출력 파일]
+- FINAL_nanum_success.png: 성공 확인용 차트
+- FINAL_nanum_verification.png: 폰트 검증용 차트
+"""
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt

@@ -1,3 +1,60 @@
+"""
+Enhanced Stock Tracking Agent
+
+[역할]
+StockTrackingAgent를 확장한 향상된 주식 트래킹 및 매매 에이전트입니다.
+시장 상황 분석, 변동성 추적, AI 기반 매도 결정 등 고급 기능을 제공합니다.
+
+[주요 기능]
+1. 시장 상황 분석
+   - KOSPI/KOSDAQ 지수 분석
+   - 시장 상황 분류 (강세/중립/약세)
+   - 변동성 추적
+2. 변동성 테이블 관리
+   - 종목별 변동성 저장 및 관리
+   - 통계적 분석 (평균, 표준편차 등)
+3. AI 기반 매도 결정
+   - 보유 종목에 대한 매도 결정 에이전트
+   - 매도 신뢰도 평가
+   - 매도 사유 분석
+4. 관심종목 이력 관리
+   - 매수/관망/스킵 결정 이력 저장
+   - 매수 점수 및 근거 저장
+5. 보유 결정 이력 관리
+   - AI의 보유/매도 결정 이력 저장
+   - 결정 신뢰도 및 사유 저장
+
+[호출 관계]
+- 호출하는 모듈:
+  * stock_tracking_agent.py: 기본 기능 상속
+  * cores/agents/trading_agents.py: 매도 결정 에이전트
+  * numpy, scipy: 통계 분석
+  * mcp_agent: MCP Agent 프레임워크
+
+[주요 클래스]
+- EnhancedStockTrackingAgent: 향상된 주식 트래킹 에이전트
+
+[주요 메서드]
+- initialize(): 데이터베이스 초기화 (시장 상황, 관심종목, 보유 결정 테이블 추가)
+- analyze_market_condition(): 시장 상황 분석
+- update_volatility_table(): 변동성 테이블 업데이트
+- make_sell_decision(): AI 기반 매도 결정
+- track_watchlist(): 관심종목 이력 저장
+- track_holding_decision(): 보유 결정 이력 저장
+
+[데이터베이스 테이블]
+- market_condition: 시장 상황 (기존 테이블 확장)
+- watchlist_history: 관심종목 이력
+- holding_decisions: 보유 결정 이력
+
+[사용 예시]
+    from stock_tracking_enhanced_agent import EnhancedStockTrackingAgent
+    
+    agent = EnhancedStockTrackingAgent()
+    await agent.initialize()
+    await agent.analyze_market_condition()
+    await agent.make_sell_decision("005930")
+"""
 import numpy as np
 from scipy import stats
 from typing import List, Tuple, Dict, Any

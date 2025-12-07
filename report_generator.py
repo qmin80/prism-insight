@@ -1,5 +1,45 @@
 """
-보고서 생성 및 변환 모듈
+Report Generator Module
+
+[역할]
+텔레그램 봇에서 사용하는 보고서 생성 및 변환 모듈입니다.
+MCP Agent를 사용하여 AI 분석 보고서를 생성하고, 마크다운/HTML로 변환합니다.
+
+[주요 기능]
+1. 보고서 생성
+   - MCP Agent를 통한 AI 분석
+   - 캐시 확인 및 재사용
+2. 파일 저장
+   - 마크다운 파일 저장
+   - HTML 파일 저장
+3. 전역 MCPApp 관리
+   - 프로세스 누적 방지
+   - 리소스 효율적 사용
+4. 동기/비동기 지원
+   - generate_report_response_sync(): 동기 실행
+   - generate_report_response(): 비동기 실행
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp_agent: MCP Agent 프레임워크
+  * cores/analysis.py: analyze_stock 함수
+  * analysis_manager.py: 백그라운드 작업 처리
+
+[주요 함수]
+- get_cached_report(): 캐시된 보고서 확인
+- save_report(): 마크다운 보고서 저장
+- save_html_report(): HTML 보고서 저장
+- generate_report_response_sync(): 동기 보고서 생성
+- generate_report_response(): 비동기 보고서 생성
+- get_or_create_global_mcp_app(): 전역 MCPApp 관리
+
+[사용 예시]
+    from report_generator import generate_report_response_sync
+    
+    report = generate_report_response_sync(
+        stock_code="005930",
+        company_name="삼성전자"
+    )
 """
 import asyncio
 import atexit

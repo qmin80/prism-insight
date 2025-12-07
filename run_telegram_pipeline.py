@@ -1,10 +1,49 @@
 #!/usr/bin/env python3
 """
-텔레그램 요약 메시지 생성 및 전송을 위한 전체 파이프라인 실행 스크립트
+Telegram Pipeline Runner
 
-1. reports 디렉토리에서 보고서 파일 검색
+[역할]
+텔레그램 요약 메시지 생성 및 전송을 위한 전체 파이프라인을 실행하는 스크립트입니다.
+보고서 파일을 읽어 텔레그램 메시지로 변환하고 전송합니다.
+
+[주요 기능]
+1. 보고서 파일 검색
+   - reports 디렉토리에서 보고서 파일 검색
+   - 날짜 필터링 지원 (오늘, 특정 날짜)
 2. 텔레그램 요약 메시지 생성
+   - PDF 보고서를 읽어 텔레그램 메시지로 변환
+   - AI를 사용한 요약 생성
 3. 텔레그램 채널로 메시지 전송
+   - 생성된 메시지를 텔레그램 채널로 전송
+   - 전송 완료된 파일은 sent 디렉토리로 이동
+
+[호출 관계]
+- 호출하는 모듈:
+  * telegram_summary_agent.py: 요약 메시지 생성
+  * telegram_bot_agent.py: 텔레그램 메시지 전송
+
+[실행 방법]
+    # 전체 파이프라인 실행 (생성 + 전송)
+    python run_telegram_pipeline.py --all
+    
+    # 요약 메시지만 생성
+    python run_telegram_pipeline.py --generate
+    
+    # 메시지만 전송
+    python run_telegram_pipeline.py --send
+    
+    # 오늘 날짜 보고서만 처리
+    python run_telegram_pipeline.py --all --today
+    
+    # 특정 날짜 보고서만 처리
+    python run_telegram_pipeline.py --all --date 20250101
+    
+    # 특정 보고서만 처리
+    python run_telegram_pipeline.py --generate --report reports/005930_삼성전자_20250101.pdf
+
+[필수 환경변수]
+- TELEGRAM_BOT_TOKEN: 텔레그램 봇 토큰
+- TELEGRAM_CHANNEL_ID: 텔레그램 채널 ID
 """
 import argparse
 import asyncio

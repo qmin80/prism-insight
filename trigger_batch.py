@@ -1,5 +1,49 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Surge Stock Detection Batch
+
+[역할]
+거래량 급증, 갭 상승, 시총 대비 거래대금 등을 분석하여 관심종목을 선별하는 배치 스크립트입니다.
+오전(09:10) 또는 오후(15:30) 모드로 실행되며, 각 모드별로 다른 기준을 적용합니다.
+
+[주요 감지 기준]
+1. 거래량 급증 (Volume Surge)
+   - 전일 대비 거래량 증가율 임계값 초과
+   - 오전: 2.0배 이상, 오후: 1.5배 이상
+2. 갭 상승 (Gap Up)
+   - 전일 종가 대비 시가 상승률
+   - 오전: 3% 이상, 오후: 2% 이상
+3. 시총 대비 거래대금
+   - 거래대금/시가총액 비율
+   - 오전: 5% 이상, 오후: 3% 이상
+4. 마감 강도 (Afternoon only)
+   - 장 마감 시점의 주가 강도 분석
+
+[호출 관계]
+- 호출하는 모듈:
+  * pykrx.stock.stock_api: 한국 거래소 데이터 조회
+
+- 호출되는 모듈:
+  * stock_analysis_orchestrator.py: 메인 파이프라인에서 실행
+
+[주요 함수]
+- get_snapshot(): 특정 거래일의 전체 종목 OHLCV 스냅샷
+- get_previous_snapshot(): 직전 영업일 스냅샷
+- detect_volume_surge(): 거래량 급증 감지
+- detect_gap_up(): 갭 상승 감지
+- detect_trade_value_ratio(): 시총 대비 거래대금 분석
+- detect_closing_strength(): 마감 강도 분석
+
+[출력 형식]
+- JSON 파일로 결과 저장
+- 각 트리거 타입별로 종목 리스트 반환
+- 메타데이터 포함 (거래일, 분석 시간 등)
+
+[사용 예시]
+    python trigger_batch.py morning INFO --output trigger_results.json
+    python trigger_batch.py afternoon INFO --output trigger_results.json
+"""
 import sys
 import datetime
 import pandas as pd

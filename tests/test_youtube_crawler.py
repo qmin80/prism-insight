@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
 """
-Test script for YouTube Event Fund Crawler
+YouTube Event Fund Crawler Test
 
-Quick validation of individual components without full workflow execution.
+[역할]
+YouTube 이벤트 펀드 크롤러의 개별 컴포넌트를 테스트하는 스크립트입니다.
+전체 워크플로우 실행 없이 각 기능을 빠르게 검증합니다.
+
+[주요 테스트 항목]
+1. RSS 피드 가져오기 테스트
+2. 영상 다운로드 테스트
+3. 오디오 추출 테스트
+4. 전체 워크플로우 테스트
+
+[실행 방법]
+    python tests/test_youtube_crawler.py
 """
 
 import os

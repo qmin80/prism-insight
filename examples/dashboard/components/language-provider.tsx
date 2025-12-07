@@ -1,3 +1,32 @@
+/**
+ * Language Provider Component
+ * 
+ * [역할]
+ * 다국어 지원을 위한 Context Provider입니다.
+ * 한국어와 영어를 지원하며, 언어 전환 시 번역된 텍스트를 제공합니다.
+ * 
+ * [주요 기능]
+ * 1. 언어 상태 관리
+ *    - "ko" (한국어) 또는 "en" (영어)
+ *    - localStorage에 저장하여 새로고침 후에도 유지
+ * 2. 번역 함수 제공
+ *    - t(key): 번역 키를 받아 해당 언어의 텍스트 반환
+ *    - 번역 딕셔너리 기반
+ * 3. Context API 사용
+ *    - useLanguage() 훅으로 어디서든 언어 정보 접근 가능
+ * 
+ * [사용 예시]
+ *   const { language, setLanguage, t } = useLanguage()
+ *   <button onClick={() => setLanguage("en")}>English</button>
+ *   <p>{t("header.dashboard")}</p>
+ * 
+ * [번역 키 구조]
+ * - header.*: 헤더 관련 텍스트
+ * - loading.*: 로딩 메시지
+ * - table.*: 테이블 헤더
+ * - metrics.*: 지표 카드 텍스트
+ * - 등등...
+ */
 "use client"
 
 import React, { createContext, useContext, useState, useEffect } from "react"

@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
 """
-포트폴리오 텔레그램 리포터 테스트 스크립트
+Portfolio Telegram Reporter Test Script
+
+[역할]
+포트폴리오 텔레그램 리포터의 기능을 테스트하는 스크립트입니다.
+계좌 조회, 포트폴리오 리포트 생성, 텔레그램 전송 등을 테스트합니다.
+
+[실행 방법]
+    python tests/test_portfolio_reporter.py
+
+[필수 환경변수]
+- TELEGRAM_BOT_TOKEN: 텔레그램 봇 토큰
+- TELEGRAM_CHANNEL_ID: 텔레그램 채널 ID
+
+[설정]
+- trading/config/kis_devlp.yaml: KIS API 설정
 """
 
 import asyncio

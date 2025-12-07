@@ -1,8 +1,45 @@
 """
-elegant_stock_charts.py - 전문 주식 시각화 도구 for AI 주식 리포팅
+Stock Chart Generation Module
 
-프로페셔널 퀄리티의 주식 차트를 생성합니다.
-투자 전문가 수준의 시각화를 제공하고 데이터 인사이트를 강조합니다.
+[역할]
+전문가 수준의 주식 차트를 생성하는 모듈입니다.
+주가, 거래량, 기술적 지표 등을 시각화하여 분석 보고서에 포함합니다.
+
+[주요 기능]
+1. 주가 차트 생성
+   - 캔들스틱 차트 (mplfinance)
+   - 이동평균선 (5일, 20일, 60일, 120일)
+   - 거래량 바 차트
+2. 기술적 지표 시각화
+   - RSI, MACD, 볼린저 밴드
+   - 지지선/저항선 표시
+3. 한글 폰트 지원
+   - macOS, Linux, Windows 자동 감지
+   - 나눔고딕, AppleSDGothicNeo 등 지원
+4. 이미지 변환
+   - Base64 인코딩
+   - 마크다운 보고서 삽입용
+
+[호출 관계]
+- 호출하는 모듈:
+  * pykrx: 주식 데이터 조회
+  * matplotlib, mplfinance, seaborn: 차트 생성
+  * cores/analysis.py: analyze_stock() 함수에서 사용
+
+[주요 함수]
+- configure_korean_font(): 한글 폰트 설정
+- create_stock_chart(): 주가 차트 생성
+- create_volume_chart(): 거래량 차트 생성
+- create_fundamental_chart(): 재무 지표 차트 생성
+
+[사용 예시]
+    from cores.stock_chart import create_stock_chart
+    
+    chart_base64 = create_stock_chart(
+        stock_code="005930",
+        start_date="20240101",
+        end_date="20250101"
+    )
 """
 
 import pandas as pd

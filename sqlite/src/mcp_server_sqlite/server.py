@@ -1,3 +1,63 @@
+"""
+MCP SQLite Server
+
+[역할]
+Model Context Protocol (MCP) 서버로 SQLite 데이터베이스와 상호작용하는 서버입니다.
+PRISM-INSIGHT 프로젝트의 stock_tracking_db.sqlite 데이터베이스에 접근하여
+데이터 조회, 수정, 분석 등의 기능을 제공합니다.
+
+[주요 기능]
+1. SQL 쿼리 실행
+   - SELECT 쿼리: 데이터 조회 (read_query)
+   - INSERT/UPDATE/DELETE 쿼리: 데이터 수정 (write_query)
+2. 테이블 관리
+   - 테이블 생성 (create_table)
+   - 테이블 목록 조회 (list_tables)
+   - 테이블 스키마 조회 (describe_table)
+3. 비즈니스 인사이트 관리
+   - 인사이트 추가 (append_insight)
+   - 인사이트 메모 자동 생성 (memo://insights 리소스)
+4. MCP 프로토콜 지원
+   - Prompts: 사전 작성된 프롬프트 제공
+   - Tools: SQL 관련 도구 제공
+   - Resources: 인사이트 메모 리소스 제공
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp.server: MCP 서버 프레임워크
+  * sqlite3: SQLite 데이터베이스 접근
+  * stock_tracking_agent.py: MCP 서버를 통해 데이터베이스 접근
+
+[주요 클래스]
+- SqliteDatabase: SQLite 데이터베이스 관리 클래스
+
+[주요 메서드]
+- _execute_query(): SQL 쿼리 실행
+- _synthesize_memo(): 비즈니스 인사이트 메모 생성
+- read_query(): SELECT 쿼리 실행
+- write_query(): INSERT/UPDATE/DELETE 쿼리 실행
+- create_table(): 테이블 생성
+- list_tables(): 테이블 목록 조회
+- describe_table(): 테이블 스키마 조회
+- append_insight(): 인사이트 추가
+
+[설정]
+- 환경변수 SQLITE_DB_PATH: SQLite 데이터베이스 파일 경로
+  (기본값: stock_tracking_db.sqlite)
+
+[사용 예시]
+    # MCP 클라이언트에서 사용
+    # Tools:
+    # - read_query: SELECT 쿼리 실행
+    # - write_query: INSERT/UPDATE/DELETE 쿼리 실행
+    # - create_table: 테이블 생성
+    # - list_tables: 테이블 목록 조회
+    # - describe_table: 테이블 스키마 조회
+    # - append_insight: 인사이트 추가
+    
+    # Resources:
+    # - memo://insights: 비즈니스 인사이트 메모
+"""
 import os
 import sys
 import sqlite3

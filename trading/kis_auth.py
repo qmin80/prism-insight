@@ -1,6 +1,58 @@
 # -*- coding: utf-8 -*-
-# ====|  (REST) 접근 토큰 / (Websocket) 웹소켓 접속키 발급 에 필요한 API 호출 샘플 아래 참고하시기 바랍니다.  |=====================
-# ====|  API 호출 공통 함수 포함                                  |=====================
+"""
+KIS (Korea Investment & Securities) API Authentication Module
+
+[역할]
+한국투자증권 Open API 인증 및 공통 함수를 제공하는 모듈입니다.
+REST API와 WebSocket API 모두를 지원합니다.
+
+[주요 기능]
+1. 토큰 발급 및 관리
+   - OAuth2 클라이언트 자격 증명 방식
+   - 토큰 암호화 저장 (Fernet)
+   - 토큰 만료 시간 관리 (1일)
+   - 자동 재발급
+2. 환경 설정 관리
+   - 실전투자/모의투자 환경 전환
+   - 계좌 정보 관리
+   - API URL 관리
+3. API 호출 래퍼
+   - 공통 헤더 설정
+   - 에러 처리
+   - 응답 파싱
+4. WebSocket 지원
+   - 실시간 데이터 구독
+   - 암호화/복호화 처리
+
+[보안 기능]
+- 토큰 파일 암호화 저장
+- 파일 권한 제한 (600)
+- 오래된 토큰 파일 자동 정리
+- Windows ACL / Unix 권한 설정
+
+[호출 관계]
+- 호출하는 모듈:
+  * requests: HTTP 요청
+  * websockets: WebSocket 연결
+  * cryptography.fernet: 토큰 암호화
+  * trading/domestic_stock_trading.py: 인증 및 API 호출
+
+[주요 함수]
+- auth(): REST API 토큰 발급
+- auth_ws(): WebSocket 승인키 발급
+- _url_fetch(): API 호출 래퍼
+- read_token(): 토큰 읽기
+- save_token(): 토큰 저장 (암호화)
+- getTREnv(): 거래 환경 정보 조회
+
+[설정 파일]
+- trading/config/kis_devlp.yaml:
+  * my_app, my_sec: 실전투자 앱키/시크리트
+  * paper_app, paper_sec: 모의투자 앱키/시크리트
+  * my_acct_stock: 실전투자 주식 계좌
+  * my_paper_stock: 모의투자 주식 계좌
+  * default_mode: 기본 모드 ("demo" 또는 "real")
+"""
 
 import asyncio
 import copy

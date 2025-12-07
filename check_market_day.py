@@ -1,4 +1,32 @@
 #!/usr/bin/env python3
+"""
+Market Day Checker
+
+[역할]
+한국 주식시장 영업일 여부를 검증하는 유틸리티 모듈입니다.
+주말, 공휴일, 특별 휴일을 체크하여 배치 작업 실행 여부를 결정합니다.
+
+[주요 기능]
+- 주말 체크 (토요일, 일요일)
+- 한국 공휴일 체크 (holidays 라이브러리 사용)
+- 노동절(5월 1일) 체크
+- 특별 공휴일/대체휴일 체크 (연도별 업데이트 필요)
+
+[호출 관계]
+- 호출되는 모듈:
+  * stock_analysis_orchestrator.py: 메인 실행 전 영업일 체크
+  * trigger_batch.py: 배치 실행 전 영업일 체크
+
+[사용 예시]
+    from check_market_day import is_market_day
+    if is_market_day():
+        # 배치 작업 실행
+        pass
+
+[주의사항]
+- 매년 특별 휴일 정보를 업데이트해야 함
+- 2025년 특별 휴일이 하드코딩되어 있음
+"""
 from holidays.countries import KR
 from datetime import date
 import sys

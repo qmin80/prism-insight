@@ -1,3 +1,51 @@
+"""
+Trading Agents Module
+
+[역할]
+매매 시나리오 생성 및 매도 결정을 위한 AI 에이전트를 생성하는 모듈입니다.
+가치 투자 원칙을 따르며, 상승 모멘텀이 확인될 때 더 적극적으로 진입합니다.
+
+[주요 기능]
+1. 매매 시나리오 생성 에이전트
+   - 분석 보고서를 읽어 매매 시나리오 생성
+   - 목표가, 손절가, 투자 기간 결정
+   - 매수 점수 계산 (1~10점)
+   - 포트폴리오 제약 조건 고려
+2. 매도 결정 에이전트
+   - 보유 종목에 대한 매도 결정
+   - 매도 신뢰도 평가
+   - 매도 사유 분석
+
+[투자 원칙]
+- 가치 투자 우선, 모멘텀 확인 시 적극 진입
+- 전량 매수/전량 매도 방식 (분할 매매 미지원)
+- 손절가: -5% ~ -7% (원칙)
+- 리스크/리워드 비율: 최소 2:1
+- 최대 보유 슬롯: 10개
+- 동일 섹터 최대: 3개
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp_agent: AI 에이전트 프레임워크
+  * kospi_kosdaq MCP 서버: 주가 데이터 조회
+  * perplexity: 밸류에이션 비교 검색
+  * time MCP 서버: 현재 시간 확인
+  * sqlite MCP 서버: 포트폴리오 상태 조회
+
+- 호출되는 모듈:
+  * stock_tracking_agent.py: 매매 시나리오 생성
+  * stock_tracking_enhanced_agent.py: 매도 결정
+  * cores/agents/__init__.py: get_agent_directory()에서 사용
+
+[주요 함수]
+- create_trading_scenario_agent(): 매매 시나리오 생성 에이전트 생성
+- create_sell_decision_agent(): 매도 결정 에이전트 생성
+
+[사용 예시]
+    from cores.agents.trading_agents import create_trading_scenario_agent
+    
+    agent = create_trading_scenario_agent(language="ko")
+"""
 from mcp_agent.agents.agent import Agent
 
 

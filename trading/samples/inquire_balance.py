@@ -1,6 +1,43 @@
 """
-Created on 20250601 
-@author: LaivData SJPark with cursor
+KIS API - 주식 잔고 조회 샘플 코드
+
+[역할]
+한국투자증권 Open API를 사용하여 주식 잔고를 조회하는 샘플 코드입니다.
+실전투자 및 모의투자 계좌 모두 지원하며, 연속 조회를 통해 모든 잔고를 가져옵니다.
+
+[주요 기능]
+1. 주식 잔고 조회
+   - 실전투자: 최대 50건/회 (연속 조회 지원)
+   - 모의투자: 최대 20건/회 (연속 조회 지원)
+2. 연속 조회 자동 처리
+   - 재귀 호출을 통한 자동 페이징
+   - 최대 재귀 깊이 제한 (기본 10회)
+3. 데이터프레임 반환
+   - output1, output2 두 개의 데이터프레임 반환
+
+[호출 관계]
+- 호출하는 모듈:
+  * trading/kis_auth.py: KIS API 인증 및 호출
+
+[주요 함수]
+- inquire_balance(): 주식 잔고 조회
+
+[사용 예시]
+    from trading.samples.inquire_balance import inquire_balance
+    from trading.kis_auth import getTREnv
+    
+    trenv = getTREnv()
+    df1, df2 = inquire_balance(
+        env_dv="demo",
+        cano=trenv.my_acct,
+        acnt_prdt_cd=trenv.my_prod,
+        afhr_flpr_yn="N",
+        inqr_dvsn="01",
+        unpr_dvsn="01",
+        fund_sttl_icld_yn="N",
+        fncg_amt_auto_rdpt_yn="N",
+        prcs_dvsn="00"
+    )
 """
 
 

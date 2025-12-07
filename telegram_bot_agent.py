@@ -1,3 +1,54 @@
+"""
+Telegram Bot Agent
+
+[역할]
+텔레그램 메시지 전송을 담당하는 에이전트 클래스입니다.
+메시지 전송, 파일 전송, 재시도 로직 등을 제공합니다.
+
+[주요 기능]
+1. 메시지 전송
+   - Markdown, MarkdownV2, HTML 파싱 모드 지원
+   - 파싱 오류 시 자동으로 일반 텍스트로 재시도
+2. 파일 전송
+   - 문서, 사진, 비디오 등 파일 전송
+   - PDF, 이미지 등 다양한 형식 지원
+3. 재시도 로직
+   - Rate limit 처리 (RetryAfter)
+   - 타임아웃 처리 (지수 백오프)
+   - 최대 재시도 횟수 제한
+4. 연결 풀 관리
+   - HTTPXRequest를 사용한 연결 풀 관리
+   - 긴 타임아웃 설정 (30초)
+
+[호출 관계]
+- 호출하는 모듈:
+  * python-telegram-bot: 텔레그램 봇 라이브러리
+  * telegram_ai_bot.py: AI 봇에서 사용
+  * run_telegram_pipeline.py: 파이프라인에서 사용
+  * telegram_summary_agent.py: 요약 메시지 전송
+
+[주요 클래스]
+- TelegramBotAgent: 텔레그램 봇 에이전트 클래스
+
+[주요 메서드]
+- send_message(): 메시지 전송
+- send_document(): 문서 전송
+- send_photo(): 사진 전송
+- send_video(): 비디오 전송
+
+[사용 예시]
+    from telegram_bot_agent import TelegramBotAgent
+    
+    bot = TelegramBotAgent(token="your-token")
+    await bot.send_message(
+        chat_id="@channel",
+        message="안녕하세요!",
+        parse_mode="Markdown"
+    )
+
+[설정]
+- TELEGRAM_BOT_TOKEN: 텔레그램 봇 토큰 (환경변수 또는 파라미터)
+"""
 import asyncio
 import os
 import logging

@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """
-Redis Streams Signal Pub/Sub 테스트
+Redis Streams Signal Pub/Sub Test
 
-테스트 실행:
+[역할]
+Redis Streams 신호 발행/구독 기능을 테스트하는 스크립트입니다.
+매수/매도 신호 발행, 구독, 데이터 파싱 등을 테스트합니다.
+
+[테스트 실행]
     # .env 파일에 설정 필요
-    # UPSTASH_REDIS_REST_URL=https://topical-lemur-7683.upstash.io
+    # UPSTASH_REDIS_REST_URL=https://...
     # UPSTASH_REDIS_REST_TOKEN=your-token
 
     # 전체 테스트
@@ -15,6 +19,12 @@ Redis Streams Signal Pub/Sub 테스트
 
     # 실제 Redis 연결 테스트
     pytest tests/test_redis_signal_pubsub.py::TestIntegrationWithRealRedis -v
+
+[주요 테스트 항목]
+1. 매수 신호 발행 테스트
+2. 매도 신호 발행 테스트
+3. 신호 구독 테스트
+4. 실제 Redis 연결 통합 테스트
 """
 import os
 import sys

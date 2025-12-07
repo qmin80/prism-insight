@@ -1,8 +1,51 @@
 #!/usr/bin/env python3
 """
 Portfolio Telegram Reporter
-- Periodically sends account and portfolio status to Telegram
-- Can be executed via crontab
+
+[역할]
+포트폴리오 상태를 텔레그램으로 주기적으로 전송하는 모듈입니다.
+계좌 잔고, 보유 종목, 수익률 등을 텔레그램 채널에 보고합니다.
+
+[주요 기능]
+1. 포트폴리오 상태 조회
+   - 계좌 잔고 조회
+   - 보유 종목 조회
+   - 수익률 계산
+2. 텔레그램 메시지 생성
+   - 포트폴리오 요약 정보
+   - 보유 종목 상세 정보
+   - 수익률 통계
+3. 다국어 브로드캐스트
+   - 여러 언어로 동시 전송 지원
+   - 언어별 채널 ID 설정
+4. 크론탭 실행 지원
+   - 주기적 실행 가능
+
+[호출 관계]
+- 호출하는 모듈:
+  * trading/domestic_stock_trading.py: 계좌 및 포트폴리오 조회
+  * telegram_bot_agent.py: 텔레그램 메시지 전송
+
+[주요 클래스]
+- PortfolioTelegramReporter: 포트폴리오 리포트 클래스
+
+[주요 메서드]
+- generate_portfolio_report(): 포트폴리오 리포트 생성
+- send_report(): 텔레그램으로 리포트 전송
+- _load_broadcast_channels(): 다국어 채널 로드
+
+[사용 예시]
+    from trading.portfolio_telegram_reporter import PortfolioTelegramReporter
+    
+    reporter = PortfolioTelegramReporter(
+        trading_mode="demo",
+        broadcast_languages=["ko", "en"]
+    )
+    await reporter.generate_and_send_report()
+
+[크론탭 설정 예시]
+    # 매일 오후 3시 30분 실행
+    30 15 * * * cd /path/to/prism-insight && python trading/portfolio_telegram_reporter.py
 """
 
 import asyncio

@@ -1,6 +1,47 @@
 """
-Created on 20250112
-@author: LaivData SJPark with cursor
+KIS API - 주식 주문(현금) 샘플 코드
+
+[역할]
+한국투자증권 Open API를 사용하여 주식 현금 매수/매도를 주문하는 샘플 코드입니다.
+시장가, 지정가, 조건부 주문 등을 지원합니다.
+
+[주요 기능]
+1. 현금 매수/매도 주문
+   - 시장가 주문
+   - 지정가 주문
+   - 조건부 주문
+2. 미수 매수 지원
+   - 증거금 40% 계좌에서 가능
+   - TTC0802U(현금매수) 사용
+
+[주의사항]
+- 주문수량, 주문단가는 String 타입으로 전달해야 함
+- 주문단가가 없으면 상한가로 주문
+- POST API의 경우 BODY key값을 대문자로 작성
+
+[호출 관계]
+- 호출하는 모듈:
+  * trading/kis_auth.py: KIS API 인증 및 호출
+
+[주요 함수]
+- order_cash(): 현금 주문 실행
+
+[사용 예시]
+    from trading.samples.order_cash import order_cash
+    from trading.kis_auth import getTREnv
+    
+    trenv = getTREnv()
+    result = order_cash(
+        env_dv="demo",
+        ord_dv="buy",
+        cano=trenv.my_acct,
+        acnt_prdt_cd=trenv.my_prod,
+        pdno="005930",
+        ord_dvsn="00",  # 시장가
+        ord_qty="10",
+        ord_unpr="0",
+        excg_id_dvsn_cd="J"
+    )
 """
 
 

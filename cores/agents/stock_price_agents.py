@@ -1,3 +1,39 @@
+"""
+Stock Price Analysis Agents Module
+
+[역할]
+주가 및 거래량 분석을 위한 AI 에이전트를 생성하는 모듈입니다.
+기술적 분석을 수행하여 주가 추세, 이동평균, 지지/저항선 등을 분석합니다.
+
+[주요 기능]
+1. 주가 및 거래량 분석 에이전트 생성
+   - OHLCV 데이터 수집 및 분석
+   - 이동평균선 분석 (골든크로스/데드크로스)
+   - 지지선/저항선 식별
+   - 거래량 패턴 분석
+   - 기술적 지표 해석 (RSI, MACD, 볼린저 밴드)
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp_agent: AI 에이전트 프레임워크
+  * kospi_kosdaq MCP 서버: 주가 데이터 조회
+  * cores/agents/__init__.py: get_agent_directory()에서 사용
+
+[주요 함수]
+- create_price_volume_analysis_agent(): 주가 및 거래량 분석 에이전트 생성
+
+[사용 예시]
+    from cores.agents.stock_price_agents import create_price_volume_analysis_agent
+    
+    agent = create_price_volume_analysis_agent(
+        company_name="삼성전자",
+        company_code="005930",
+        reference_date="20250101",
+        max_years_ago="20220101",
+        max_years=3,
+        language="ko"
+    )
+"""
 from mcp_agent.agents.agent import Agent
 
 def create_price_volume_analysis_agent(company_name, company_code, reference_date, max_years_ago, max_years, language: str = "ko"):

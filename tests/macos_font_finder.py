@@ -1,5 +1,26 @@
 """
-매우 단순한 한글 폰트 테스트 및 해결책
+macOS Font Finder and Test
+
+[역할]
+macOS 환경에서 한글 폰트를 찾고 테스트하는 스크립트입니다.
+matplotlib에서 한글을 표시하기 위한 폰트 설정을 검증합니다.
+
+[주요 기능]
+1. 시스템 한글 폰트 파일 검색
+   - macOS: AppleSDGothicNeo, AppleGothic, NanumGothic
+   - Windows: Malgun Gothic
+   - Linux: NanumGothic
+2. 폰트 테스트 차트 생성
+   - FontProperties 직접 적용 방식
+   - rcParams 설정 방식
+3. 테스트 이미지 저장
+   - korean_test_result.png 파일 생성
+
+[실행 방법]
+    python tests/macos_font_finder.py
+
+[출력]
+- korean_test_result.png: 한글 폰트 테스트 결과 이미지
 """
 
 import matplotlib.pyplot as plt

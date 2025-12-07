@@ -1,3 +1,39 @@
+"""
+Market Index Analysis Agents Module
+
+[역할]
+시장 지수(KOSPI, KOSDAQ) 분석을 위한 AI 에이전트를 생성하는 모듈입니다.
+전체 시장 동향, 거시경제 환경, 글로벌 경제 영향을 종합 분석합니다.
+
+[주요 기능]
+1. 시장 지수 분석 에이전트 생성
+   - KOSPI/KOSDAQ 지수 데이터 분석
+   - 당일 시장 변동 요인 분석 (최우선)
+   - 거시경제 환경 분석
+   - 글로벌 경제 영향 분석
+   - 시장 추세 및 모멘텀 분석
+   - 투자 타이밍 판단
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp_agent: AI 에이전트 프레임워크
+  * kospi_kosdaq MCP 서버: 지수 데이터 조회
+  * perplexity: 거시경제 및 글로벌 이슈 검색
+  * cores/agents/__init__.py: get_agent_directory()에서 사용
+
+[주요 함수]
+- create_market_index_analysis_agent(): 시장 지수 분석 에이전트 생성
+
+[사용 예시]
+    from cores.agents.market_index_agents import create_market_index_analysis_agent
+    
+    agent = create_market_index_analysis_agent(
+        reference_date="20250101",
+        max_years_ago="20220101",
+        max_years=3,
+        language="ko"
+    )
+"""
 from mcp_agent.agents.agent import Agent
 
 

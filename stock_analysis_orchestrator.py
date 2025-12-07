@@ -2,12 +2,51 @@
 """
 Stock Analysis and Telegram Transmission Orchestrator
 
-Overall Process:
+[역할]
+전체 파이프라인을 조율하는 메인 오케스트레이터입니다.
+급등주 포착부터 분석 리포트 생성, PDF 변환, 텔레그램 전송까지 전체 프로세스를 관리합니다.
+
+[주요 프로세스]
 1. Execute time-based (morning/afternoon) trigger batch jobs
+   - trigger_batch.py를 실행하여 급등주 포착
+   - 오전(09:10) 또는 오후(15:30) 모드 지원
 2. Generate detailed analysis reports for selected stocks
+   - cores/analysis.py를 통해 13개 AI 에이전트 협업 분석
+   - 순차 실행으로 API rate limit 고려
 3. Convert reports to PDF
+   - pdf_converter.py를 사용하여 마크다운 → PDF 변환
+   - Playwright 기반 변환 (권장)
 4. Generate and send telegram channel summary messages
+   - telegram_summary_agent.py로 요약 생성
+   - telegram_bot_agent.py로 텔레그램 전송
 5. Send generated PDF attachments
+   - 생성된 PDF 파일을 텔레그램 채널에 전송
+
+[호출 관계]
+- 호출하는 모듈:
+  * trigger_batch.py: 급등주 포착
+  * cores/analysis.py: 분석 리포트 생성
+  * pdf_converter.py: PDF 변환
+  * telegram_summary_agent.py: 요약 생성
+  * telegram_bot_agent.py: 텔레그램 전송
+  * stock_tracking_enhanced_agent.py: 매매 시뮬레이션
+  * telegram_config.py: 텔레그램 설정 관리
+
+[사용 예시]
+    python stock_analysis_orchestrator.py --mode morning
+    python stock_analysis_orchestrator.py --mode afternoon --no-telegram
+    python stock_analysis_orchestrator.py --mode both --language en
+
+[주요 클래스]
+- StockAnalysisOrchestrator: 오케스트레이터 메인 클래스
+
+[주요 메서드]
+- run_full_pipeline(): 전체 파이프라인 실행
+- run_trigger_batch(): 급등주 포착 실행
+- generate_reports(): 분석 리포트 생성 (순차 처리)
+- convert_to_pdf(): PDF 변환
+- generate_telegram_messages(): 텔레그램 메시지 생성
+- send_telegram_messages(): 텔레그램 전송 (다국어 지원)
 """
 import argparse
 import asyncio

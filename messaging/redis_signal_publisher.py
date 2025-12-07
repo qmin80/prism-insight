@@ -1,19 +1,47 @@
 """
 Redis Streams Signal Publisher
 
-Module for publishing PRISM-INSIGHT buy/sell signals to Redis Streams.
-Subscribers can receive real-time trading signals by subscribing to this stream.
+[역할]
+PRISM-INSIGHT의 매수/매도 신호를 Redis Streams에 발행하는 모듈입니다.
+실시간으로 거래 신호를 구독자에게 전달할 수 있습니다.
 
-Usage:
+[주요 기능]
+1. 매수 신호 발행
+   - 종목 코드, 회사명, 가격, 시나리오 정보 포함
+2. 매도 신호 발행
+   - 종목 코드, 매도 가격, 수익률 정보 포함
+3. Redis Streams 사용
+   - Upstash Redis REST API 지원
+   - 비동기 컨텍스트 매니저 지원
+
+[호출 관계]
+- 호출하는 모듈:
+  * upstash_redis: Redis 클라이언트
+  * stock_tracking_agent.py: 매수/매도 신호 발행
+
+[주요 클래스]
+- SignalPublisher: Redis Streams 신호 발행 클래스
+
+[주요 메서드]
+- publish_buy_signal(): 매수 신호 발행
+- publish_sell_signal(): 매도 신호 발행
+- connect(): Redis 연결
+- disconnect(): Redis 연결 해제
+
+[사용 예시]
     from messaging.redis_signal_publisher import SignalPublisher
-
+    
     async with SignalPublisher() as publisher:
         await publisher.publish_buy_signal(
             ticker="005930",
-            company_name="Samsung Electronics",
+            company_name="삼성전자",
             price=82000,
-            scenario=scenario_dict
+            scenario={"target_price": 90000, "stop_loss": 78000}
         )
+
+[설정]
+- UPSTASH_REDIS_REST_URL: Redis REST API URL
+- UPSTASH_REDIS_REST_TOKEN: Redis REST API Token
 """
 import os
 import json

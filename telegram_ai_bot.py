@@ -1,12 +1,51 @@
 #!/usr/bin/env python3
 """
-텔레그램 AI 대화형 봇
+Telegram AI Interactive Bot
 
-사용자 요청에 맞춤형 응답을 제공하는 봇:
-- /evaluate 명령어를 통해 보유 종목에 대한 분석 및 조언 제공
-- /report 명령어로 특정 종목에 대한 상세 분석 보고서 생성 및 HTML 파일 제공
-- /history 명령어로 특정 종목의 분석 히스토리 확인
-- 채널 구독자만 사용 가능
+[역할]
+텔레그램에서 사용자와 대화형으로 상호작용하는 AI 봇입니다.
+사용자의 요청에 맞춤형 응답을 제공하며, 주식 분석 및 조언을 제공합니다.
+
+[주요 기능]
+1. /evaluate 명령어
+   - 보유 종목에 대한 분석 및 조언 제공
+   - 평균 매수가, 보유 기간, 투자 톤, 배경 정보 입력 받음
+   - AI 기반 맞춤형 평가 제공
+2. /report 명령어
+   - 특정 종목에 대한 상세 분석 보고서 생성
+   - HTML 파일로 보고서 제공
+   - 캐시된 보고서 재사용
+3. /history 명령어
+   - 특정 종목의 분석 히스토리 확인
+   - 과거 분석 보고서 조회
+4. 대화 컨텍스트 관리
+   - 대화 이력 저장 및 관리
+   - 연속 대화 지원
+5. 채널 구독자 인증
+   - 채널 구독자만 사용 가능
+
+[호출 관계]
+- 호출하는 모듈:
+  * analysis_manager.py: 분석 요청 관리
+  * report_generator.py: 보고서 생성
+  * telegram_bot_agent.py: 텔레그램 메시지 전송
+  * python-telegram-bot: 텔레그램 봇 프레임워크
+
+[주요 클래스]
+- ConversationContext: 대화 컨텍스트 관리 클래스
+
+[주요 함수]
+- evaluate_command(): /evaluate 명령어 처리
+- report_command(): /report 명령어 처리
+- history_command(): /history 명령어 처리
+- start(): 봇 시작
+
+[실행 방법]
+    python telegram_ai_bot.py
+
+[필수 환경변수]
+- TELEGRAM_BOT_TOKEN: 텔레그램 봇 토큰
+- TELEGRAM_CHANNEL_ID: 텔레그램 채널 ID (구독자 인증용)
 """
 import asyncio
 import json

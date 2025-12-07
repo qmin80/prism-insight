@@ -1,14 +1,52 @@
 #!/usr/bin/env python3
 """
-Module for converting Markdown files to PDF
+Markdown to PDF Converter Module
 
-Provides various conversion methods:
-1. Playwright-based HTML conversion (Recommended) - Uses Chromium browser engine
-2. pdfkit-based HTML conversion (Legacy) - Requires wkhtmltopdf, archived in 2023
-3. reportlab direct rendering - Theme not supported
-4. mdpdf simple conversion - Theme not supported
+[역할]
+마크다운 파일을 PDF로 변환하는 모듈입니다.
+여러 변환 방법을 지원하며, Playwright 기반 변환이 권장됩니다.
 
-Recommended order: Playwright > pdfkit > reportlab > mdpdf
+[지원하는 변환 방법]
+1. Playwright-based HTML conversion (권장)
+   - Chromium 브라우저 엔진 사용
+   - 테마 및 워터마크 지원
+   - 고품질 출력
+2. pdfkit-based HTML conversion (레거시)
+   - wkhtmltopdf 필요 (2023년 아카이브됨)
+   - 테마 지원
+3. reportlab direct rendering
+   - 테마 미지원
+4. mdpdf simple conversion
+   - 테마 미지원
+
+[호출 관계]
+- 호출하는 모듈:
+  * playwright: 브라우저 기반 PDF 생성
+  * markdown: 마크다운 파싱
+  * PyPDF2: PDF 병합
+
+- 호출되는 모듈:
+  * stock_analysis_orchestrator.py: 리포트 PDF 변환
+
+[주요 함수]
+- markdown_to_pdf(): 마크다운을 PDF로 변환 (메인 함수)
+- create_watermark(): 워터마크 생성
+- merge_pdfs(): 여러 PDF 파일 병합
+
+[사용 예시]
+    from pdf_converter import markdown_to_pdf
+    
+    markdown_to_pdf(
+        input_path="report.md",
+        output_path="report.pdf",
+        method="playwright",
+        add_theme=True,
+        enable_watermark=False
+    )
+
+[주의사항]
+- Playwright 사용 시 Chromium 브라우저 설치 필요
+- Linux 환경에서는 한글 폰트 설치 필요
 """
 import os
 import logging

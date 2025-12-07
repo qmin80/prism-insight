@@ -1,7 +1,35 @@
 """
-Jeon Ingu Trading - Real-time price fetcher using pykrx
+Jeon Ingu Trading Price Fetcher
 
-Fetches current prices for KODEX Leverage and KODEX Inverse 2X
+[역할]
+전인구 트레이딩 시스템에서 사용하는 ETF의 현재가를 조회하는 모듈입니다.
+pykrx를 사용하여 KODEX 레버리지 및 인버스 ETF의 가격 정보를 가져옵니다.
+
+[주요 기능]
+1. 최신 거래일 확인
+   - 주말 및 공휴일 제외
+   - 최근 5일 내 거래일 확인
+2. 종목 가격 조회
+   - KODEX Leverage (122630)
+   - KODEX Inverse 2X (252670)
+3. OHLCV 데이터 제공
+   - 시가, 고가, 저가, 종가, 거래량
+
+[호출 관계]
+- 호출하는 모듈:
+  * pykrx.stock: 한국 주식 시장 데이터 조회
+  * events/jeoningu_trading.py: 현재가 조회
+
+[주요 함수]
+- get_latest_trading_date(): 최신 거래일 조회
+- get_stock_price(): 종목 가격 정보 조회
+- get_kodex_prices(): KODEX ETF 가격 일괄 조회
+- get_current_price(): 현재 종가 조회 (간편 함수)
+
+[사용 예시]
+    from events.jeoningu_price_fetcher import get_current_price
+    
+    price = get_current_price("122630")  # KODEX Leverage
 """
 
 from pykrx import stock

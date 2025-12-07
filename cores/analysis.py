@@ -1,3 +1,54 @@
+"""
+Core Stock Analysis Engine
+
+[역할]
+13개 AI 에이전트를 조율하여 종합 주식 분석 리포트를 생성하는 핵심 엔진입니다.
+각 에이전트는 특정 분석 영역에 특화되어 있으며, 순차적으로 실행되어 최종 리포트를 생성합니다.
+
+[주요 프로세스]
+1. MCPApp 초기화 (mcp-agent 프레임워크)
+2. 에이전트 디렉토리 가져오기 (cores/agents/__init__.py)
+3. 순차적으로 각 섹션 분석 (API rate limit 고려)
+   - price_volume_analysis: 기술적 분석
+   - investor_trading_analysis: 거래동향 분석
+   - company_status: 재무 분석
+   - company_overview: 사업 분석
+   - news_analysis: 뉴스 분석
+   - market_index_analysis: 시장 분석 (캐싱됨)
+4. 투자 전략 생성 (모든 분석 결과 통합)
+5. 요약 생성
+6. 차트 생성 (주가, 거래량, 시가총액, 재무 지표)
+7. 최종 리포트 조합
+
+[호출 관계]
+- 호출하는 모듈:
+  * cores/agents/__init__.py: 에이전트 팩토리
+  * cores/report_generation.py: 리포트 생성 함수들
+  * cores/stock_chart.py: 차트 생성
+  * cores/utils.py: 유틸리티 함수
+
+- 호출되는 모듈:
+  * stock_analysis_orchestrator.py: 메인 파이프라인에서 호출
+  * cores/main.py: 개별 테스트 실행
+
+[주요 함수]
+- analyze_stock(): 종합 분석 리포트 생성 (메인 함수)
+
+[중요 사항]
+- 순차 실행: API rate limit을 피하기 위해 병렬 실행하지 않음
+- 시장 분석 캐싱: 동일 날짜의 시장 분석 결과는 _market_analysis_cache에 저장되어 재사용
+- 에러 처리: 각 섹션 분석 실패 시에도 다음 섹션 계속 진행 (graceful degradation)
+
+[사용 예시]
+    from cores.analysis import analyze_stock
+    
+    report = await analyze_stock(
+        company_code="005930",
+        company_name="삼성전자",
+        reference_date="20251205",
+        language="ko"
+    )
+"""
 import os
 from datetime import datetime
 

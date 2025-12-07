@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
 """
-JSON 파싱 오류 수정 테스트 코드
+JSON Parsing Error Fix Test
 
-stock_tracking_agent.py의 JSON 파싱 로직을 테스트합니다.
+[역할]
+stock_tracking_agent.py의 JSON 파싱 로직을 테스트하는 스크립트입니다.
+실제 에러 로그에서 발생한 JSON 파싱 오류를 재현하고 수정 방법을 검증합니다.
+
+[주요 테스트 항목]
+1. 실제 오류 발생 JSON 파싱 테스트
+2. JSON 문법 오류 수정 로직 테스트
+3. 다양한 JSON 형식 파싱 테스트
+
+[실행 방법]
+    python tests/test_json_parsing.py
 """
 
 import json

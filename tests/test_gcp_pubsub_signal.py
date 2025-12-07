@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
-GCP Pub/Sub Signal Publisher 테스트
+GCP Pub/Sub Signal Publisher Test
 
-테스트 실행:
+[역할]
+GCP Pub/Sub 신호 발행 기능을 테스트하는 스크립트입니다.
+매수/매도 신호 발행, 메시지 포맷, 에러 처리 등을 테스트합니다.
+
+[테스트 실행]
     # .env 파일에 설정 필요
     # GCP_PROJECT_ID=your-project-id
     # GCP_PUBSUB_TOPIC_ID=prism-trading-signals
@@ -16,6 +20,12 @@ GCP Pub/Sub Signal Publisher 테스트
 
     # 실제 GCP 연결 테스트
     pytest tests/test_gcp_pubsub_signal.py::TestIntegrationWithRealPubSub -v
+
+[주요 테스트 항목]
+1. 매수 신호 발행 테스트
+2. 매도 신호 발행 테스트
+3. 메시지 포맷 검증
+4. 실제 GCP Pub/Sub 연결 통합 테스트
 """
 import os
 import sys

@@ -1,3 +1,52 @@
+"""
+Telegram Summary Agent
+
+[역할]
+분석 보고서를 텔레그램 메시지로 요약하는 에이전트입니다.
+PDF 보고서를 읽어 AI를 사용하여 텔레그램에 적합한 요약 메시지를 생성합니다.
+
+[주요 기능]
+1. 보고서 파일 읽기
+   - PDF 보고서 파일 읽기
+   - 파일명에서 메타데이터 추출 (종목코드, 종목명, 날짜)
+2. 트리거 유형 결정
+   - morning/afternoon 모드 확인
+   - 트리거 결과 파일에서 종목의 트리거 유형 파악
+3. 텔레그램 요약 메시지 생성
+   - AI 에이전트를 사용한 요약 생성
+   - Evaluator-Optimizer 패턴으로 품질 보장
+   - 다국어 지원 (한국어, 영어, 일본어, 중국어 등)
+4. 배치 처리
+   - 여러 보고서 파일 일괄 처리
+   - 날짜 필터링 지원
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp_agent: MCP Agent 프레임워크
+  * cores/agents/telegram_summary_optimizer_agent.py: 요약 생성 에이전트
+  * cores/agents/telegram_summary_evaluator_agent.py: 요약 평가 에이전트
+  * cores/agents/telegram_translator_agent.py: 번역 에이전트
+  * run_telegram_pipeline.py: 파이프라인 실행
+
+[주요 클래스]
+- TelegramSummaryGenerator: 텔레그램 요약 생성 클래스
+
+[주요 메서드]
+- read_report(): 보고서 파일 읽기
+- extract_metadata_from_filename(): 파일명에서 메타데이터 추출
+- determine_trigger_type(): 트리거 유형 결정
+- process_report(): 보고서 처리 및 요약 생성
+- process_all_reports(): 모든 보고서 일괄 처리
+
+[사용 예시]
+    from telegram_summary_agent import TelegramSummaryGenerator
+    
+    generator = TelegramSummaryGenerator()
+    await generator.process_report(
+        report_path="reports/005930_삼성전자_20250101.pdf",
+        output_dir="telegram_messages"
+    )
+"""
 import asyncio
 import re
 import os

@@ -1,5 +1,47 @@
 """
-분석 요청 관리 및 백그라운드 작업 처리 모듈
+Analysis Request Manager
+
+[역할]
+분석 요청을 관리하고 백그라운드에서 처리하는 모듈입니다.
+텔레그램 봇에서 사용하는 분석 요청 큐를 관리합니다.
+
+[주요 기능]
+1. 분석 요청 큐 관리
+   - Queue를 사용한 작업 대기열
+   - 요청 상태 추적 (pending, processing, completed, failed)
+2. 백그라운드 워커
+   - 별도 스레드에서 분석 실행
+   - 텔레그램 봇과 비동기 처리
+3. 캐시 확인
+   - 기존 보고서 캐시 확인
+   - 캐시된 보고서 재사용
+4. 상태 업데이트
+   - 텔레그램 메시지로 상태 전송
+
+[호출 관계]
+- 호출하는 모듈:
+  * report_generator.py: 보고서 생성
+  * telegram_ai_bot.py: 텔레그램 봇 인스턴스
+
+[주요 클래스]
+- AnalysisRequest: 분석 요청 데이터 클래스
+
+[주요 함수]
+- start_background_worker(): 백그라운드 워커 시작
+
+[사용 예시]
+    from analysis_manager import start_background_worker, analysis_queue, AnalysisRequest
+    
+    # 워커 시작
+    start_background_worker(bot_instance)
+    
+    # 요청 추가
+    request = AnalysisRequest(
+        stock_code="005930",
+        company_name="삼성전자",
+        chat_id=123456789
+    )
+    analysis_queue.put(request)
 """
 import logging
 import traceback

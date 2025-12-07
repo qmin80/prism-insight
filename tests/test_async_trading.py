@@ -1,10 +1,27 @@
 """
-비동기 트레이딩 API 테스트 스크립트
+Asynchronous Trading API Test Script
 
-주의사항:
+[역할]
+비동기 트레이딩 API의 기능을 테스트하는 스크립트입니다.
+단일 매수/매도, 동시 매매, 에러 처리 등을 테스트합니다.
+
+[주의사항]
 - 이 테스트는 모의투자 환경에서만 실행하세요
 - 실제 매매가 발생할 수 있으므로 종목코드와 금액을 신중히 설정하세요
 - 테스트 전 config/kis_devlp.yaml 파일의 설정을 확인하세요
+
+[주요 테스트 항목]
+1. 단일 매수 테스트
+2. 단일 매도 테스트
+3. 동시 매수 테스트 (여러 종목)
+4. 에러 처리 테스트
+
+[실행 방법]
+    python tests/test_async_trading.py
+
+[설정]
+- trading/config/kis_devlp.yaml: KIS API 설정
+- default_mode: "demo" (모의투자) 권장
 """
 
 import asyncio

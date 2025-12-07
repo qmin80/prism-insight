@@ -1,3 +1,36 @@
+"""
+Company Information Agents Module
+
+[역할]
+기업 현황 분석을 위한 AI 에이전트를 생성하는 모듈입니다.
+WiseReport 웹사이트의 기업현황 페이지 데이터를 수집하고 분석합니다.
+
+[주요 기능]
+1. 기업 현황 분석 에이전트 생성
+   - WiseReport 기업현황 페이지 데이터 수집
+   - 재무 지표, 밸류에이션, 주주 구성 등 분석
+   - 투자 의견 및 목표가 분석
+
+[호출 관계]
+- 호출하는 모듈:
+  * mcp_agent: AI 에이전트 프레임워크
+  * firecrawl: 웹 페이지 스크래핑
+  * cores/agents/__init__.py: get_agent_directory()에서 사용
+
+[주요 함수]
+- create_company_status_agent(): 기업 현황 분석 에이전트 생성
+
+[사용 예시]
+    from cores.agents.company_info_agents import create_company_status_agent
+    
+    agent = create_company_status_agent(
+        company_name="삼성전자",
+        company_code="005930",
+        reference_date="20250101",
+        urls={"기업현황": "https://..."},
+        language="ko"
+    )
+"""
 from mcp_agent.agents.agent import Agent
 
 

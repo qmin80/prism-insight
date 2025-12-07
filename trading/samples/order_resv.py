@@ -1,6 +1,45 @@
 """
-Created on 20250112 
-@author: LaivData SJPark with cursor
+KIS API - 주식 예약주문 샘플 코드
+
+[역할]
+한국투자증권 Open API를 사용하여 주식 예약주문을 하는 샘플 코드입니다.
+장 마감 후 다음 영업일 장 시작 전에 자동으로 주문이 체결됩니다.
+
+[주요 기능]
+1. 예약주문 등록
+   - 매수/매도 예약주문
+   - 지정가/시장가 예약주문
+2. 예약주문 시간
+   - 가능 시간: 15시 40분 ~ 다음 영업일 7시 30분
+   - 불가 시간: 23시 40분 ~ 00시 10분 (서버 초기화)
+
+[주의사항]
+- 예약주문 처리내역은 통보되지 않음
+- 주문처리일 장 시작 전에 반드시 주문처리 결과 확인 필요
+- POST API의 경우 BODY key값을 대문자로 작성
+
+[호출 관계]
+- 호출하는 모듈:
+  * trading/kis_auth.py: KIS API 인증 및 호출
+
+[주요 함수]
+- order_resv(): 예약주문 등록
+
+[사용 예시]
+    from trading.samples.order_resv import order_resv
+    from trading.kis_auth import getTREnv
+    
+    trenv = getTREnv()
+    result = order_resv(
+        cano=trenv.my_acct,
+        acnt_prdt_cd=trenv.my_prod,
+        pdno="005930",
+        ord_qty="10",
+        ord_unpr="82000",
+        sll_buy_dvsn_cd="02",  # 매수
+        ord_dvsn_cd="00",  # 지정가
+        ord_objt_cblc_dvsn_cd="01"
+    )
 """
 
 
